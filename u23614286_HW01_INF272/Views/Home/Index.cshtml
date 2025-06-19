@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+<link href="~/Content/Home.css" rel="stylesheet" />
+
+<div class="container py-5">
+
+    <!-- First Row: Top Left and Top Right -->
+    <div class="row align-items-center mb-0">
+
+        <!-- Top Left: Book Ambulance button -->
+        <div class="col-6 d-flex flex-column align-items-center  home-top-left">
+            <h2>A real O.K. team here to <br /> try and save you</h2>
+            <p>Please don't hesitate. Book an ambulance right now <br />if someone is in need!</p>
+            <a href="/Home/Services" class="btn home-book-btn mb-3 px-5">
+                BOOK AMBULANCE
+            </a>
+        </div>
+
+        <!-- Top Right: Ambulance Image clickable (same as BOOK AMBULANCE) -->
+        <div class="col-6 d-flex align-items-center justify-content-end">
+            <a href="/Home/Services">
+                <img src="~/Images/Services/ambulance.jpg" alt="Ambulance" class="img-fluid"
+                     style="border-radius: 12px; width: 400px; cursor: pointer; margin-right: 75px; max-width: 100%;" />
+            </a>
+        </div>
+
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-6 home-bottom-left">
+            <p style="font-size: 15px;">
+                Emergency? Only hit the button for <span style="text-decoration:underline; font-weight: bold;">real</span> emergencies...
+                <br />
+                paper cuts and stubbed toes are not considerd emergenices. Misuse of S.O.S could have dire consequences.
+            </p>
+        </div>
+
+        <div class="col-6 d-flex flex-column align-items-center">
+            <img src="~/Images/image2.png" alt="S.O.S Button"
+                 style="width: 450px; height: 225px; cursor: pointer; margin-left:15px" id="sosButton"/>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<style>
+    body {
+        font-family: 'Arial Rounded MT', Arial;
+        color: #333;
+    }
+    .navbar{
+        border-top-width: 10px;
+        border-bottom-width: 30px;
+    }
+    .navbar-nav{
+        margin-right: 35px;
+    }
+    .navbar-nav .nav-link {
+        color: #333 !important;
+        font-weight:600;
+        font-size:18px;
+        margin-left:13px;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #000 !important;
+        font-weight: 700;
+        margin-left:11px;
+
+    }
+    
+    .navbar-nav .nav-link:active {
+        font-weight: bold;
+    }
+</style>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head> 
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-top border-bottom py-1" style="border-color: rgba(0, 0, 0, 0.1); padding-bottom: 0.5rem;">
+        <div class="container-fluid ps-3">
+            <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+                <img src="~/images/image1.jpg" alt="Medical Logo" width="40" height="40" class="me-2 rounded-circle" />
+                <div class="text-white">
+                    <div class="fw-bold" style="font-family:'Arial Rounded MT'; color:#333; font-size:25px;">RescueBus</div>
+                    <!--added ms-4 bootstrap to shift slogan to the right-->
+                    <div class="slogan fw-lighter navbar-text fst-italic ms-4" style="font-family:Calibri; color:#000; font-size:18px;">It takes just one click to save a life</div>
+                </div>
+            </a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-end">
+                <ul class="navbar-nav flex-grow-1 justify-content-end">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Ride History", "Index", "RideHistory", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Manage", "Contact", "Manage", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

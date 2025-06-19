@@ -1,0 +1,63 @@
+﻿@model List<u23614286_HW01_INF272.Models.Service>
+
+@{
+    ViewBag.Title = "Services";
+}
+<style>
+    body {
+        background-color: #f3f3f3;
+        padding: 0;
+        margin: 0;
+    }
+    .service-link {
+        text-decoration: none;
+        color: #444;
+    }
+
+    .service-link:hover {
+        color: #222; 
+        text-decoration: none;
+    }
+    .card-title{
+        font-weight: 600;
+    }
+    .card-text{
+        font-size: 12px;
+    }
+    .service-card .card-title,
+    .service-card .card-text {
+        color: #444;
+        font-family: 'Arial Rounded MT';
+    }
+    .service-card {
+        width: 340px;
+        min-height: 265px;
+        border-radius: 50px;
+    }
+    .service-img {
+        border-radius: 50px;
+        height: 245px;
+        width: 310px;
+        object-fit: fill;
+        margin-left: 13px;
+    }
+
+</style>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 py-5" style="background-color: #f3f3f3;" >
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <a href="@Url.Action("Book", "Home", new { id = item.ServiceID })" class="service-link">
+                <div class="card service-card">
+                    <img src="@Url.Content(item.ImagePath)" class="card-img-top service-img" alt="@item.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+

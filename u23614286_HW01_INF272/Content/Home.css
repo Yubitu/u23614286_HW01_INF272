@@ -1,0 +1,35 @@
+﻿
+.home-top-left {
+    background-color: #e4e4e4;
+    border-radius: 12px;
+    color: #4b365f;
+    padding: 50px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+
+.home-book-btn {
+    background-color: #4b365f;
+    color: white;
+    border: none;
+    padding: 13px 0px;
+    align-content: center;
+    border-radius: 70px;
+    font-weight: 500;
+    font-family: Calibri;
+}
+
+.home-book-btn:hover {
+    background-color: #3c2e4a;
+    color: white;
+}
+
+.home-bottom-left {
+    background-color: #e8c3b9;
+    color: #4b365f;
+    padding: 65px;
+    font-size: 15px;
+    margin-top: 0px;
+    border-radius: 12px;
+}
