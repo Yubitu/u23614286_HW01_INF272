@@ -62,10 +62,10 @@ namespace u23614286_HW01_INF272.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            var vehicle = VehicleRepository.Vehicles.FirstOrDefault(v => v.VehicleID == id);
-            if (vehicle != null)
+            var driver = DriverRepository.Drivers.FirstOrDefault(d => d.DriverID == id);
+            if (driver != null)
             {
-                VehicleRepository.Vehicles.Remove(vehicle);
+                DriverRepository.Drivers.Remove(driver);
             }
             return RedirectToAction("Manage", "Home");
         }

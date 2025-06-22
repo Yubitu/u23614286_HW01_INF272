@@ -76,6 +76,7 @@
                         <button class="btn btn-sm btn-update" onclick="editDriver(@driver.DriverID)">Update</button>
                         @using (Html.BeginForm("Delete", "Driver", FormMethod.Post, new { @style = "display:inline;" }))
                         {
+                            @Html.AntiForgeryToken()
                             @Html.Hidden("id", driver.DriverID)
                             <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Are you sure you want to delete this driver? This action cannot be undone.');">
                                 Delete
