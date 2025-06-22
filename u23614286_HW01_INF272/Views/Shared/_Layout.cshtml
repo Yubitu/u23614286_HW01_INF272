@@ -12,7 +12,7 @@
         margin-right: 35px;
     }
     .navbar-nav .nav-link {
-        color: #333 !important;
+        color: #444 !important;
         font-weight:600;
         font-size:18px;
         margin-left:13px;
@@ -20,14 +20,20 @@
 
     .navbar-nav .nav-link:hover {
         color: #000 !important;
-        font-weight: 700;
-        margin-left:11px;
+        margin-left: 13px;
 
     }
     
     .navbar-nav .nav-link:active {
         font-weight: bold;
     }
+
+    .active-link .nav-link {
+        font-weight: 700 !important;
+        text-decoration: underline !important;
+        color: #000 !important;
+    }
+
 </style>
 <html>
 <head>
@@ -55,9 +61,15 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-end">
                 <ul class="navbar-nav flex-grow-1 justify-content-end">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Ride History", "RideHistory", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Manage", "Manage", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active-link" : "")">
+                        @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["action"].ToString() == "RideHistory" ? "active-link" : "")">
+                        @Html.ActionLink("Ride History", "RideHistory", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Manage" ? "active-link" : "")">
+                        @Html.ActionLink("Manage", "Manage", "Home", new { area = "" }, new { @class = "nav-link" })
+                    </li>
                 </ul>
             </div>
         </div>

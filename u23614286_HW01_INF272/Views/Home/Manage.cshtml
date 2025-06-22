@@ -169,6 +169,14 @@
                 </tr>
             }
         </tbody>
+        <tfoot>
+            <tr style="background-color: white; color: white;">
+                <td colspan="4"></td>
+                <td class="text-center">
+                    <button id="exportVehiclesBtn" class="btn btn-action">Export</button>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 
     <button id="toggleVehicleFormBtn" class="btn btn-action mb-3" type="button">
@@ -181,7 +189,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <label class="form-label">Type</label>
-                    <input type="text" name="Type" class="form-control" required />
+                    <select name="Type" class="form-select" required>
+                        <option value="">-- Select Type --</option>
+                        <option value="ALS Ambulance">ALS Ambulance</option>
+                        <option value="BLS Ambulance">BLS Ambulance</option>
+                        <option value="Patient Transport">Patient Transport</option>
+                        <option value="Utility Vehicle">Utility Vehicle</option>
+                        <option value="Event Ambulance">Event Ambulance</option>
+                        <option value="Air Ambulance">Air Ambulance</option>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Registration</label>
@@ -344,5 +360,69 @@
         })
         .catch(() => alert('Something went wrong.'));
     }
+    const vehiclesFromServer = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Vehicles));
+    // Save vehicles array to localStorage on page load
+    localStorage.setItem('vehicles', JSON.stringify(vehiclesFromServer));
+
+    document.getElementById('exportVehiclesBtn').addEventListener('click', function () {
+        // Get vehicles from localStorage (assuming they are stored as JSON string)
+        const vehiclesJson = localStorage.getItem('vehicles');
+        if (!vehiclesJson) {
+            alert('No vehicles found in local storage to export.');
+            return;
+        }
+
+        const vehicles = JSON.parse(vehiclesJson);
+
+        if (!vehicles.length) {
+            alert('No vehicles found in local storage to export.');
+            return;
+        }
+
+        let content = 'VehicleID, Type, RegistrationNumber, ServiceID\n'; // CSV header
+        vehicles.forEach(v => {
+            content += `\n${v.VehicleID}, ${v.Type}, ${v.RegistrationNumber}, ${v.ServiceID}\n`;
+        });
+
+        // Create a blob and trigger download
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'vehicles_export.txt';
+        document.body.appendChild(a);
+        a.click();
+
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 0);
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const vehicleForm = document.querySelector('.vehicle-form-section');
+
+        if (vehicleForm) {
+            vehicleForm.addEventListener('submit', function (e) {
+                //Small delay to let the server save and redirect
+                setTimeout(() => {
+                    const vehicles = JSON.parse(localStorage.getItem('vehicles')) || [];
+
+                    //Create a new vehicle object based on the form fields
+                    const newVehicle = {
+                        VehicleID: Date.now(),
+                        Type: vehicleForm.querySelector('input[name="Type"]').value,
+                        RegistrationNumber: vehicleForm.querySelector('input[name="RegistrationNumber"]').value,
+                        ServiceID: parseInt(vehicleForm.querySelector('select[name="ServiceID"]').value),
+                        ImagePath: "" //not available on client side
+                    };
+
+                    vehicles.push(newVehicle);
+                    localStorage.setItem('vehicles', JSON.stringify(vehicles));
+                }, 100); //short delay to avoid racing the server redirect
+            });
+        }
+    });
 </script>
 
