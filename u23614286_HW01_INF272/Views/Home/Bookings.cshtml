@@ -1,0 +1,149 @@
+﻿@model u23614286_HW01_INF272.Models.Booking
+
+@{
+    ViewBag.Title = "Bookings";
+    var service = u23614286_HW01_INF272.Models.ServiceRepository.Services
+        .FirstOrDefault(s => s.ServiceID == ViewBag.ServiceID);
+
+    var drivers = ViewBag.Drivers as List<u23614286_HW01_INF272.Models.Driver>;
+    var selectedDriverID = 0;
+
+    if (drivers != null && drivers.Any())
+    {
+        var rand = new Random();
+        selectedDriverID = drivers[rand.Next(drivers.Count)].DriverID;
+    }
+}
+<style>
+    body {
+        background-color: #f3f3f3;
+        padding: 0;
+        margin: 0;
+    }
+    .form-box {
+        background-color: white;
+        border-radius: 40px; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        margin-left: auto;
+        margin-right: auto;
+        height: 600px;
+        padding-top: 45px;
+        margin-top: 25px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .book-btn {
+        background-color: #4B3F72;
+        color: white;
+        transition: background-color 0.3s ease;
+    }
+
+        .book-btn:hover {
+            background-color: #c800ff;
+        }
+</style>
+<div class="container my-4">
+    <div class="text-center">
+        @if (service != null)
+        {
+            <img src="@Url.Content(service.ImagePath)" alt="@service.Name" style="max-height: 150px;" />
+            <h2 class="mt-2" style="color: #444; font-family: 'Arial Rounded MT';">@service.Name</h2>
+        }
+    </div>
+    <div class="form-box">
+        @using (Html.BeginForm("CreateBooking", "Home", FormMethod.Post, new { id = "bookingForm", style = "margin-left: 150px;" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row mt-4 d-flex justify-content-center">
+
+                <!-- Column 1 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="FullName">Full Name</label>
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "", required = "required" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="PickupTime">Pick-Up Time</label>
+                        @Html.TextBoxFor(m => m.PickupTime, new { @class = "form-control", type = "time", required = "required" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="VehicleID">Vehicle</label>
+                        <select id="VehicleID" name="VehicleID" class="form-control" required>
+                            @foreach (var vehicle in ViewBag.Vehicles)
+                            {
+                                <option value="@vehicle.VehicleID" selected>@vehicle.Type</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="PhoneNumber">Phone</label>
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "+27 00 000 0000", maxlength = 15, minLength = 10, required = "required" })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ReasonID">Reason</label>
+                        <select id="ReasonID" name="ReasonID" class="form-control" required>
+                            <option value="" disabled selected style="color: #bfbfbf"></option>
+                            @foreach (var reason in ViewBag.Reasons)
+                            {
+                                <option value="@reason.ReasonID">@reason.Description</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DriverID">Driver</label>
+                        <select id="DriverID" name="DriverID" class="form-control" required>
+                            @foreach (var driver in drivers.Where(d => d.DriverID == selectedDriverID))
+                            {
+                                <option value="@driver.DriverID" selected>
+                                    @driver.FirstName @driver.LastName
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row for Pick-Up Address -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label asp-for="PickupAddress" class="form-label">Pick-Up Address</label>
+                    @Html.TextAreaFor(m => m.PickupAddress, new
+                    {
+                        @class = "form-control",
+                        placeholder = "Please type your address here...",
+                        rows = "3",
+                        style = "width: 81%; max-width: none; border-radius: 1rem; resize: none; margin-bottom: 20px;",
+                        required = "required"
+                    })
+                </div>
+            </div>
+
+            <!-- Row for Book Ambulance Button -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit"
+                            class="btn book-btn"
+                            style="color: white; border-radius: 2rem; padding: 0.75rem 2rem; border: none; width: 60%; margin-right: 200px;">
+                        BOOK AMBULANCE
+                    </button>
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+
+
+

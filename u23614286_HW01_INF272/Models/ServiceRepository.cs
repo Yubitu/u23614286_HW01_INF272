@@ -12,7 +12,7 @@ namespace u23614286_HW01_INF272.Models
             new Service {
                 ServiceID = 1,
                 Name = "ALS (Advanced Life Support)",
-                Description = "ALS is used to transport critical patients in need of high-level care. Staffed by a Paramedic.",
+                Description = "ALS is used to transport critical patients in need of high-level care. Staffed by a Paramedic. For emergencies.",
                 ImagePath = "~/Images/Services/advanced.png",
                 Drivers = new List<Driver>(),
                 Vehicles = new List<Vehicle>()
@@ -20,7 +20,7 @@ namespace u23614286_HW01_INF272.Models
             new Service {
                 ServiceID = 2,
                 Name = "BLS (Basic Life Support)",
-                Description = "BLS is used to transport patients in non-life-threatening condition. Basic support only.",
+                Description = "BLS is used to transport patients in non-life-threatening condition. Basic support only. For non-emergencies.",
                 ImagePath = "~/Images/Services/basic.png",
                 Drivers = new List<Driver>(),
                 Vehicles = new List<Vehicle>()
@@ -36,7 +36,7 @@ namespace u23614286_HW01_INF272.Models
             new Service {
                 ServiceID = 4,
                 Name = "Medical Utility Vehicle",
-                Description = "A small or large van designed to facilitate the movement and transport of patients.",
+                Description = "A state-of-the-art small or large van designed to facilitate efficient movement and transport of patients.",
                 ImagePath = "~/Images/Services/utility.png",
                 Drivers = new List<Driver>(),
                 Vehicles = new List<Vehicle>()

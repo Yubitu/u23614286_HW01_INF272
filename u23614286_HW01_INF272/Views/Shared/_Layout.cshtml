@@ -31,6 +31,7 @@
 </style>
 <html>
 <head>
+    <link rel="stylesheet" href="~/Content/RideHistory.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -55,8 +56,8 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-end">
                 <ul class="navbar-nav flex-grow-1 justify-content-end">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Ride History", "Index", "RideHistory", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Manage", "Contact", "Manage", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Ride History", "RideHistory", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Manage", "Manage", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>

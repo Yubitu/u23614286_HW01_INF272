@@ -1,0 +1,54 @@
+﻿@model IEnumerable<u23614286_HW01_INF272.Models.RideHistoryViewModel>
+
+@{
+    ViewBag.Title = "Ride History";
+}
+
+<link rel="stylesheet" href="~/Content/RideHistory.css" />
+<!-- Clock icon & title -->
+<div class="text-center my-4">
+    <img src="~/Images/clock.png" alt="Ride History" style="width:140px">
+    <h2 class="mt-2">Ride History</h2>
+</div>
+
+<div class="container d-flex flex-column align-items-center">
+    @foreach (var ride in Model)
+    {
+        var cardClasses = ride.IsSOS
+             ? "card sos-card"
+             : "card normal-card shadow";
+
+        <div class="@cardClasses"
+             style="width: 80%; max-width: 700px; margin-bottom: 20px;">
+            <div class="card-body">
+                <h5 class="card-title @(ride.IsSOS ? "sos-date" : "")">
+                    @ride.DisplayDate
+                </h5>
+
+                <p class="mb-1"><strong>Booking ID:</strong> @ride.Booking.BookingID</p>
+                <p class="mb-1">
+                    <strong>Driver Name:</strong>
+                    @(ride.Driver != null
+                        ? $"{ride.Driver.FirstName} {ride.Driver.LastName}"
+                        : "Unknown")
+                </p>
+                <p class="mb-1">
+                    <strong>Ambulance Type:</strong>
+                    @(ride.Vehicle?.Type ?? "Unknown")
+                </p>
+                <p class="mb-1"><strong>Pick-up Address:</strong> @ride.DisplayAddress</p>
+
+                <a href="@Url.Action("BookingConfirmed", "Home",
+                                     new { id = ride.Booking.BookingID })"
+                   class="stretched-link"></a>
+
+                <a href="@Url.Action("BookingConfirmed", "Home", new { id = ride.Booking.BookingID })"
+                   class="arrow-link">
+                    &#8250;
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+

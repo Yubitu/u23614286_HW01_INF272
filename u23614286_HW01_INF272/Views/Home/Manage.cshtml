@@ -1,0 +1,348 @@
+﻿@model u23614286_HW01_INF272.Models.VehicleDriverViewModel
+
+@{
+    ViewBag.Title = "Driver and Vehicle Management";
+
+    // Sort Drivers by Last Name
+    Model.Drivers = Model.Drivers.OrderBy(d => d.LastName).ToList();
+}
+
+<link rel="stylesheet" href="~/Content/Manage.css" />
+
+<!-- Bootstrap JS (for Collapse) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container text-center my-4">
+    <img src="~/Images/manage.png" alt="Management" style="width: 90px">
+    <h2 class="mt-2" style="font-family: 'Arial Rounded MT'; color: #444; margin-bottom: 60px; ">Driver and Vehicle Management</h2>
+
+    <!-- DRIVERS SECTION -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="6" class="text-start" style="font-size: 18px; color: #444; font-weight: 800; margin-top: 30px;">Drivers</th>
+            </tr>
+            <tr>
+                <th colspan="6" class="text-start">
+                    @using (Html.BeginForm("Search", "Driver", FormMethod.Post))
+                    {
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <input type="text" name="firstName" class="form-control" placeholder="Search by First Name" />
+                        </div>
+                        <div class="col-md-4">
+                            <select name="serviceID" class="form-select" style="color: #444; font-family: 'Arial Rounded MT'; font-weight: 600;">
+                                <option value="">Services</option>
+                                @foreach (var service in u23614286_HW01_INF272.Models.ServiceRepository.Services)
+                                {
+                                    <option value="@service.ServiceID" style="color: #444;">@service.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-action">Search</button>
+                        </div>
+                    </div>
+                    }
+                </th>
+
+            </tr>
+            <tr class="tr-main">
+                <th>Image</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Service</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var driver in Model.Drivers.OrderBy(d => d.LastName))
+            {
+                var service = u23614286_HW01_INF272.Models.ServiceRepository.Services.FirstOrDefault(s => s.ServiceID == driver.ServiceID);
+                <tr id="driverRow_@driver.DriverID"
+                    data-id="@driver.DriverID"
+                    data-firstname="@driver.FirstName"
+                    data-lastname="@driver.LastName"
+                    data-phone="@driver.PhoneNumber"
+                    data-serviceid="@driver.ServiceID">
+
+                    <td><img src="@Url.Content(!string.IsNullOrEmpty(driver.ImagePath) ? driver.ImagePath : "~/Images/driver1.jpg")" style="width:60px; height:60px; object-fit:cover; border-radius:50%;" />
+                    <td>@driver.FirstName</td>
+                    <td>@driver.LastName</td>
+                    <td>@driver.PhoneNumber</td>
+                    <td>@(service?.Name ?? "Unknown")</td>
+                    <td>
+                        <button class="btn btn-sm btn-update" onclick="editDriver(@driver.DriverID)">Update</button>
+                        @using (Html.BeginForm("Delete", "Driver", FormMethod.Post, new { @style = "display:inline;" }))
+                        {
+                            @Html.Hidden("id", driver.DriverID)
+                            <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Are you sure you want to delete this driver? This action cannot be undone.');">
+                                Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+    <button id="toggleDriverFormBtn" class="btn btn-action mb-3" type="button">
+        Add Driver
+    </button>
+
+    <div class="collapse" id="driverForm">
+        @using (Html.BeginForm("Create", "Driver", FormMethod.Post, new { enctype = "multipart/form-data", @class = "driver-form-section" }))
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">First Name</label>
+                    <input type="text" name="FirstName" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" name="LastName" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    <input type="text" name="PhoneNumber" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Service</label>
+                    <select name="ServiceID" class="form-select" required>
+                        <option value="">-- Select --</option>
+                        @foreach (var service in u23614286_HW01_INF272.Models.ServiceRepository.Services)
+                        {
+                            <option value="@service.ServiceID">@service.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Image</label>
+                    <input type="file" name="ImageFile" class="form-control" />
+                </div>
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-action">Create</button>
+                </div>
+            </div>
+        }
+    </div>
+    <hr class="my-5" />
+
+    <!-- VEHICLES SECTION -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="5" class="text-start" style="font-size: 20px; color: #444;">Vehicles</th>
+            </tr>
+            <tr class="tr-main">
+                <th>Image</th>
+                <th>Type</th>
+                <th>Registration</th>
+                <th>Service</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicle in Model.Vehicles.OrderBy(v => v.Type))
+            {
+                var service = u23614286_HW01_INF272.Models.ServiceRepository.Services.FirstOrDefault(s => s.ServiceID == vehicle.ServiceID);
+                <tr id="vehicleRow_@vehicle.VehicleID"
+                    data-type="@vehicle.Type"
+                    data-registration="@vehicle.RegistrationNumber"
+                    data-serviceid="@vehicle.ServiceID">
+
+                    <td><img src="@Url.Content(vehicle.ImagePath)" style="width: 100px; height: 50px; object-fit: cover; border-radius: 12px;" /></td>
+                    <td>@vehicle.Type</td>
+                    <td>@vehicle.RegistrationNumber</td>
+                    <td>@(service?.Name ?? "Unknown")</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-update" onclick="editVehicle(@vehicle.VehicleID)">Update</button>
+                        @using (Html.BeginForm("Delete", "Vehicle", FormMethod.Post, new { onsubmit = "return confirm('Are you sure you want to delete this vehicle? This action cannot be undone');", style = "display:inline;" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@vehicle.VehicleID" />
+                            <button type="submit" class="btn btn-sm btn-delete">Delete</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button id="toggleVehicleFormBtn" class="btn btn-action mb-3" type="button">
+        Add Vehicle
+    </button>
+
+    <div class="collapse" id="vehicleForm">
+        @using (Html.BeginForm("Create", "Vehicle", FormMethod.Post, new { enctype = "multipart/form-data", @class = "vehicle-form-section" }))
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Type</label>
+                    <input type="text" name="Type" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Registration</label>
+                    <input type="text" name="RegistrationNumber" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Service</label>
+                    <select name="ServiceID" class="form-select" required>
+                        <option value="">-- Select --</option>
+                        @foreach (var service in u23614286_HW01_INF272.Models.ServiceRepository.Services)
+                        {
+                            <option value="@service.ServiceID">@service.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Image</label>
+                    <input type="file" name="ImageFile" class="form-control" />
+                </div>
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-action">Create</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleDriverBtn = document.getElementById('toggleDriverFormBtn');
+        const driverForm = document.getElementById('driverForm');
+        const bsDriverCollapse = new bootstrap.Collapse(driverForm, { toggle: false });
+        const toggleVehicleBtn = document.getElementById('toggleVehicleFormBtn');
+        const vehicleForm = document.getElementById('vehicleForm');
+        const bsVehicleCollapse = new bootstrap.Collapse(vehicleForm, { toggle: false });
+
+        toggleDriverBtn.addEventListener("click", function () {
+            if (driverForm.classList.contains("show")) {
+                bsDriverCollapse.hide();
+                toggleDriverBtn.textContent = "Add Driver";
+            } else {
+                bsDriverCollapse.show();
+                toggleDriverBtn.textContent = "Hide";
+            }
+        });
+
+        toggleVehicleBtn.addEventListener("click", function () {
+            if (vehicleForm.classList.contains("show")) {
+                bsVehicleCollapse.hide();
+                toggleVehicleBtn.textContent = "Add Vehicle";
+            } else {
+                bsVehicleCollapse.show();
+                toggleVehicleBtn.textContent = "Hide";
+            }
+        });
+    });
+
+     function editDriver(driverId) {
+    const row = document.getElementById(`driverRow_${driverId}`);
+
+    // Read current data from row's data- attributes
+    const firstName = row.dataset.firstname;
+    const lastName = row.dataset.lastname;
+    const phone = row.dataset.phone;
+    const serviceID = row.dataset.serviceid;
+
+    // Get the services list from your model (Razor inject)
+    const services = @Html.Raw(Json.Encode(u23614286_HW01_INF272.Models.ServiceRepository.Services));
+
+    // Replace the row's innerHTML with editable inputs (no <form> tag)
+    row.innerHTML = `
+      <td><img src="${row.querySelector('img').src}" style="width:60px; height:60px; object-fit:cover; border-radius:50%;" /></td>
+      <td><input type="text" name="FirstName" class="form-control form-control-sm" value="${firstName}" required></td>
+      <td><input type="text" name="LastName" class="form-control form-control-sm" value="${lastName}" required></td>
+      <td><input type="text" name="PhoneNumber" class="form-control form-control-sm" value="${phone}" required></td>
+      <td>
+        <select name="ServiceID" class="form-select form-select-sm">
+          ${services.map(s => `<option value="${s.ServiceID}" ${s.ServiceID == serviceID ? "selected" : ""}>${s.Name}</option>`).join('')}
+        </select>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-success" onclick="submitDriverUpdate(${driverId}, this)">Save</button>
+        <button class="btn btn-sm btn-secondary" onclick="location.reload()">Cancel</button>
+      </td>
+    `;
+  }
+
+  // Called when clicking "Save" button after editing
+    function submitDriverUpdate(driverId, btn) {
+        const row = btn.closest('tr');
+        const formData = new FormData();
+        formData.append('DriverID', driverId);
+        formData.append('FirstName', row.querySelector('input[name="FirstName"]').value);
+        formData.append('LastName', row.querySelector('input[name="LastName"]').value);
+        formData.append('PhoneNumber', row.querySelector('input[name="PhoneNumber"]').value);
+        formData.append('ServiceID', row.querySelector('select[name="ServiceID"]').value);
+        formData.append('ImagePath', ''); // Empty or keep as needed
+
+        fetch('/Driver/Update', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Update failed. Please try again.');
+                }
+            })
+            .catch(() => alert('An error occurred while updating the driver.'));
+    }
+    function editVehicle(vehicleId) {
+        const row = document.getElementById(`vehicleRow_${vehicleId}`);
+
+        const type = row.dataset.type;
+        const registration = row.dataset.registration;
+        const serviceID = row.dataset.serviceid;
+
+        const services = @Html.Raw(Json.Encode(u23614286_HW01_INF272.Models.ServiceRepository.Services));
+        const types = ["ALS Ambulance", "BLS Ambulance", "Patient Transport", "Utility Vehicle", "Event Ambulance", "Air Ambulance"];
+
+        row.innerHTML = `
+            <td><img src="${row.querySelector('img').src}" style="width: 100px; height: 50px; object-fit: cover; border-radius: 12px;" /></td>
+            <td>
+                <select name="Type" class="form-select form-select-sm">
+                    ${types.map(t => `<option value="${t}" ${t === type ? "selected" : ""}>${t}</option>`).join("")}
+                </select>
+            </td>
+            <td><input type="text" name="RegistrationNumber" class="form-control form-control-sm" value="${registration}" required></td>
+            <td>
+                <select name="ServiceID" class="form-select form-select-sm">
+                    ${services.map(s => `<option value="${s.ServiceID}" ${s.ServiceID == serviceID ? "selected" : ""}>${s.Name}</option>`).join("")}
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-success" onclick="submitVehicleUpdate(${vehicleId}, this)">Save</button>
+                <button class="btn btn-sm btn-secondary" onclick="location.reload()">Cancel</button>
+            </td>
+        `;
+    }
+    function submitVehicleUpdate(vehicleId, btn) {
+        const row = btn.closest('tr');
+        const formData = new FormData();
+        formData.append('VehicleID', vehicleId);
+        formData.append('Type', row.querySelector('select[name="Type"]').value);
+        formData.append('RegistrationNumber', row.querySelector('input[name="RegistrationNumber"]').value);
+        formData.append('ServiceID', row.querySelector('select[name="ServiceID"]').value);
+        formData.append('ImagePath', ''); // Not updating image
+
+        fetch('/Vehicle/Update', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Update failed.');
+            }
+        })
+        .catch(() => alert('Something went wrong.'));
+    }
+</script>
+

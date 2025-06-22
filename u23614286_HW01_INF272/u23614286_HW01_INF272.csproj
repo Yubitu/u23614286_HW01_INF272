@@ -120,18 +120,29 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\BookingConfirmedViewModel.cs" />
+    <Compile Include="Models\BookingRepository.cs" />
     <Compile Include="Models\Driver.cs" />
+    <Compile Include="Models\DriverRepository.cs" />
+    <Compile Include="Models\Reason.cs" />
+    <Compile Include="Models\ReasonRepository.cs" />
+    <Compile Include="Models\RideHistoryViewModel.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\ServiceRepository.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehicleDriverViewModel.cs" />
+    <Compile Include="Models\VehicleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\BookingConfirmed.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -149,17 +160,40 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Home.css" />
+    <Content Include="Content\Manage.css" />
+    <Content Include="Content\RideHistory.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\clock.png" />
+    <Content Include="Images\Drivers\driver4.jpg" />
+    <Content Include="Images\Drivers\driver3.jpg" />
+    <Content Include="Images\Drivers\driver1.jpg" />
+    <Content Include="Images\Drivers\driver2.jpg" />
+    <Content Include="Images\Drivers\driver6.jpg" />
+    <Content Include="Images\Drivers\driver5.jpg" />
+    <Content Include="Images\Drivers\driver11.jpg" />
+    <Content Include="Images\Drivers\driver10.jpg" />
+    <Content Include="Images\Drivers\driver9.png" />
+    <Content Include="Images\Drivers\driver12.jpg" />
+    <Content Include="Images\Drivers\driver7.png" />
+    <Content Include="Images\Drivers\driver8.png" />
     <Content Include="Images\image1.jpg" />
     <Content Include="Images\image2.png" />
+    <Content Include="Images\manage.png" />
     <Content Include="Images\Services\advanced.png" />
     <Content Include="Images\Services\air.jpg" />
     <Content Include="Images\Services\ambulance.jpg" />
     <Content Include="Images\Services\basic.png" />
     <Content Include="Images\Services\event.jpg" />
     <Content Include="Images\Services\utility.png" />
+    <Content Include="Images\tick.png" />
+    <Content Include="Images\Vehicles\vehicle6.jpg" />
+    <Content Include="Images\Vehicles\vehicle4.png" />
+    <Content Include="Images\Vehicles\vehicle3.jpg" />
+    <Content Include="Images\Vehicles\vehicle2.jpg" />
+    <Content Include="Images\Vehicles\vehicle1.jpg" />
+    <Content Include="Images\Vehicles\vehicle5.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -190,9 +224,14 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Services.cshtml" />
+    <Content Include="Views\Home\Bookings.cshtml" />
+    <Content Include="Views\Home\BookingConfirmed.cshtml" />
+    <Content Include="Views\Home\RideHistory.cshtml" />
+    <Content Include="Views\Home\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Vehicle\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

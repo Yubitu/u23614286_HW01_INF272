@@ -1,0 +1,55 @@
+﻿@model u23614286_HW01_INF272.Models.BookingConfirmedViewModel
+@{
+    ViewBag.Title = "Booking Confirmed";
+}
+
+<link rel="stylesheet" href="~/Content/BookingConfirmed.css" />
+
+<div class="container my-2">
+
+    <div class="text-center mb-4">
+        <img src="~/Images/tick.png" alt="Tick Icon" style="height: 80px;" />
+        <h2 class="fw-bold mt-3" style="color: #444; font-family: 'Arial Rounded MT';">Booking Confirmed</h2>
+    </div>
+
+    <div class="d-flex justify-content-center mb-4">
+        <div class="confirmation-card">
+            <h5 class="text-center mb-3">Booking Details</h5>
+            <p><strong>Booking ID:</strong> @Model.Booking.BookingID</p>
+            <p><strong>Date Booked:</strong> @Model.Booking.BookingDate.ToString("dd/MM/yyyy")</p>
+            <p><strong>Pick-Up Time:</strong> @Model.Booking.PickupTime.ToString("hh:mm tt")</p>
+            <p><strong>Pick-Up Address:</strong> @Model.Booking.PickupAddress</p>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mb-4">
+        <div class="confirmation-card d-flex flex-column">
+            <h5 class="text-center mb-3">Driver Details</h5>
+            <div class="d-flex align-items-center">
+                <img src="@Model.Driver.ImagePath" alt="Driver Image" class="driver-img me-4" />
+                <div>
+                    <p><strong>Driver Name:</strong> @Model.Driver.FirstName @Model.Driver.LastName</p>
+                    <p><strong>Phone Number:</strong> @Model.Driver.PhoneNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ambulance Details -->
+    <div class="d-flex justify-content-center mb-4">
+        <div class="confirmation-card d-flex flex-column">
+            <h5 class="text-center mb-3">Ambulance Details</h5>
+            <div class="d-flex align-items-center">
+                <img src="@Model.Vehicle.ImagePath" alt="Vehicle Image" class="vehicle-img me-4" />
+                <div>
+                    <p><strong>Ambulance Type:</strong> @Model.Vehicle.Type</p>
+                    <p><strong>Registration Number:</strong> @Model.Vehicle.RegistrationNumber</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+

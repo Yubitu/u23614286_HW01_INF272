@@ -1,0 +1,62 @@
+﻿body {
+    background-color: #f3f3f3;
+    padding: 0;
+    margin: 0;
+}
+
+.sos-card {
+    background-color: white;
+    border: 1px solid #ff0033;
+    box-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+    transition: transform 0.2s ease;
+    border-radius: 25px;
+    font-size: 13.2px;
+}
+
+.normal-card {
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    border: 1px solid #444;
+    font-size: 13.2px;
+}
+
+h5 {
+    color: #444;
+    font-family: 'Arial Rounded MT';
+}
+
+p {
+    color: #444;
+    font-family: Arial;
+}
+
+strong {
+    font-family: 'Arial Rounded MT';
+    font-weight: 650;
+}
+
+.sos-card h5 {
+    color: #ff0033;
+}
+
+h2 {
+    color: #444;
+    font-family: 'Arial Rounded MT';
+    margin-bottom: 60px;
+}
+
+.arrow-link {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: #444;
+    text-decoration: none;
+}
+
+.card {
+    position: relative;
+}

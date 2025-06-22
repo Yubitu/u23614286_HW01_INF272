@@ -1,0 +1,81 @@
+﻿body {
+    background-color: #f3f3f3;
+    padding: 0;
+    margin: 0;
+}
+
+.btn {
+    border-radius: 25px !important;
+    width: 80px;
+    height: 28px;
+}
+.btn-update {
+    background-color: #4B3F72;
+    color: white;
+    border: none;
+}
+
+.btn-delete {
+    background-color: #e63946;
+    color: white;
+    border: none;
+}
+
+.btn-action {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 120px;
+    height: 35px;
+}
+
+.table {
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border-collapse: separate;
+    border: 25px solid white;
+}
+
+.table td, .table th {
+    border: none !important;
+}
+
+.table td, .table th {
+    color: #444;
+    font-family: 'Arial Rounded MT', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.btn:hover {
+    border: 2px solid #444;
+}
+
+.tr-main {
+    background-color: #f0f0f0;
+    margin-top: 40px;
+}
+
+.tr-main th {
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.form-label {
+    font-family: Arial, sans-serif;
+    color: #444;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.vehicle-form-section .form-control,
+.vehicle-form-section .form-select {
+    margin-bottom: 15px;
+}
+
+#driverForm label,
+#vehicleForm label {
+    display: block !important;
+    text-align: left !important;
+}
